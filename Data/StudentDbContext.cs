@@ -10,6 +10,6 @@ namespace StudentManagement.API.Data
         {
         }
 
-        public DbSet<Student> Students => Set<Student>();
+        public DbSet<Student> Students { get; set; }
     }
 }
