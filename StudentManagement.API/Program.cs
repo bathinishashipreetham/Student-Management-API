@@ -3,7 +3,6 @@ using StudentManagement.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StudentDbContext>(options =>
     options.UseInMemoryDatabase("StudentDB"));
@@ -13,7 +12,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
