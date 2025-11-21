@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagement.API.Data;
 using StudentManagement.API.Models;
 
-
 namespace StudentManagement.API.Controllers
 {
     [Route("api/[controller]")]
@@ -27,12 +26,7 @@ namespace StudentManagement.API.Controllers
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
             var student = await _context.Students.FindAsync(id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
+            if (student == null) return NotFound();
             return student;
         }
 
@@ -41,19 +35,15 @@ namespace StudentManagement.API.Controllers
         {
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStudent(int id, Student student)
         {
-            if (id != student.Id)
-                return BadRequest();
-
+            if (id != student.Id) return BadRequest();
             _context.Entry(student).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
@@ -61,12 +51,9 @@ namespace StudentManagement.API.Controllers
         public async Task<IActionResult> DeleteStudent(int id)
         {
             var student = await _context.Students.FindAsync(id);
-            if (student == null)
-                return NotFound();
-
+            if (student == null) return NotFound();
             _context.Students.Remove(student);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
     }
