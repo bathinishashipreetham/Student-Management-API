@@ -1,6 +1,6 @@
+using StudentManagement.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StudentManagement.API.Data;
 using StudentManagement.API.Models;
 
 namespace StudentManagement.API.Controllers
