@@ -1,3 +1,4 @@
+using StudentManagement.API.Data;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.API.Models;
 
