@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.API.Models;
-using StudentManagement.API.Models;
+
 namespace StudentManagement.API.Data
 {
     public class StudentDbContext : DbContext
