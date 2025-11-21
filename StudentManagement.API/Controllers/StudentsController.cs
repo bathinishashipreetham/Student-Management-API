@@ -6,51 +6,44 @@ namespace StudentManagement.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class StudentsController : ControllerBase
+    public class StudentController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<Student>> GetAll()
+        public IActionResult GetAllStudents()
         {
-            return Ok(InMemoryStudentStore.Students);
+            var students = InMemoryStudentStore.GetAllStudents();
+            return Ok(students);
         }
 
-        [HttpGet("{id:guid}")]
-        public ActionResult<Student> GetById(Guid id)
+        [HttpGet("{id}")]
+        public IActionResult GetStudentById(int id)
         {
-            var student = InMemoryStudentStore.Students.FirstOrDefault(s => s.Id == id);
-            if (student == null) return NotFound();
+            var student = InMemoryStudentStore.GetStudentById(id);
+            if (student == null)
+                return NotFound($"Student with ID {id} not found");
+
             return Ok(student);
         }
 
         [HttpPost]
-        public ActionResult<Student> Create([FromBody] Student student)
+        public IActionResult AddStudent(Student student)
         {
-            InMemoryStudentStore.Students.Add(student);
-            return CreatedAtAction(nameof(GetById), new { id = student.Id }, student);
+            InMemoryStudentStore.AddStudent(student);
+            return Created($"api/student/{student.Id}", student);
         }
 
-        [HttpPut("{id:guid}")]
-        public IActionResult Update(Guid id, [FromBody] Student updated)
+        [HttpPut("{id}")]
+        public IActionResult UpdateStudent(int id, Student student)
         {
-            var student = InMemoryStudentStore.Students.FirstOrDefault(s => s.Id == id);
-            if (student == null) return NotFound();
-
-            student.FirstName = updated.FirstName;
-            student.LastName = updated.LastName;
-            student.Email = updated.Email;
-            student.DateOfBirth = updated.DateOfBirth;
-            student.Course = updated.Course;
-
-            return NoContent();
+            InMemoryStudentStore.UpdateStudent(id, student);
+            return Ok($"Student {id} updated successfully");
         }
 
-        [HttpDelete("{id:guid}")]
-        public IActionResult Delete(Guid id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStudent(int id)
         {
-            var student = InMemoryStudentStore.Students.FirstOrDefault(s => s.Id == id);
-            if (student == null) return NotFound();
-            InMemoryStudentStore.Students.Remove(student);
-            return NoContent();
+            InMemoryStudentStore.DeleteStudent(id);
+            return Ok($"Student {id} deleted successfully");
         }
     }
 }
