@@ -3,7 +3,10 @@ using StudentManagement.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddControllers();
+
+// ★ USE SQL SERVER instead of InMemoryDatabase
 builder.Services.AddDbContext<StudentDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -12,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -19,6 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
